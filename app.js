@@ -3,7 +3,8 @@
  */
 
 <!--scope mówi daj mi zasięg tylko users. $rootScope dałby mi zasięg wszystkiego-->
-angular.module("Sda", []).controller("usersCtrl", function ($scope, $http) {
+angular.module("Sda", ['ngResource']).controller("usersCtrl", function ($scope, $http) {
+    var resource = $resource('http://jsonplaceholder.typicode.com/users/:user', {user: "@user"});
     // $scope.loading = true;
     // $scope.users = [];
     // var promise = $http.get("")
@@ -11,11 +12,17 @@ angular.module("Sda", []).controller("usersCtrl", function ($scope, $http) {
     //
     // })
     //w jednej linijce to co powyżej:
-        $http.get("https://jsonplaceholder.typicode.com/users").then(function (res) {
+/*    $http.get("https://jsonplaceholder.typicode.com/users").then(function (res) {
         // console.log(res);
-            $scope.users = res.data;
-            $scope.loading = false;
-    });
+        $scope.users = res.data;
+        $scope.loading = false;
+
+    });*/ //zamiast http.get można zrobic poprzez resource:
+        $scope.users = resource.query(function (users) { //pierwsza funkcja mówi o sukcesie a druga o błędzie
+        }, function() {
+            $scope.error = true;
+        });
+
     /* var user = {
      username: "pawel",
      role: "admin"
@@ -45,24 +52,24 @@ angular.module("Sda", []).controller("usersCtrl", function ($scope, $http) {
     };
 
 
-  /*  $scope.users = [
-        {
-            username: "pawel",
-            role: "admin"
-        }, {
-            username: "Wojtek",
-            role: "manager"
-        }, {
-            username: "michal",
-            role: "user"
-        }, {
-            username: "Angela",
-            role: "owner"
-        }, {
-            username: "Admin",
-            role: "admin"
-        },
-    ];*/
+    /*  $scope.users = [
+     {
+     username: "pawel",
+     role: "admin"
+     }, {
+     username: "Wojtek",
+     role: "manager"
+     }, {
+     username: "michal",
+     role: "user"
+     }, {
+     username: "Angela",
+     role: "owner"
+     }, {
+     username: "Admin",
+     role: "admin"
+     },
+     ];*/
 }).controller("TabsCtrl", function ($scope) {
     $scope.current = 1;
     $scope.changeTab = function (tab) {

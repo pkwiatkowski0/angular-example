@@ -36,7 +36,7 @@
                 <p ng-bind="hello"></p>
 
                 <!--petla for w html: -->
-                <p ng-repeat="user in users |limitTo:2" ng-bind="user"></p>
+                <p ng-repeat="user in users | limitTo:2" ng-bind="user"></p>
 
                 <br>
                 <!--2 way databinging to co jest w html wrzucimy do controllera. Wyswietli nam sie pole input ktore zmienia zmienną. Ta funkcja jest baredzo ciężka!-->
@@ -87,6 +87,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
     <!--zla praktyka tworzyc kod scriptowy w html ale dla ulatwienia tak zrobie-->
     <script src="app.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.3/angular-resource.js"></script>
+
+
 </nav>
 </body>
 </html>
