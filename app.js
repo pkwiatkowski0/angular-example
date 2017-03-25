@@ -2,7 +2,7 @@
  * Created by patry on 25.03.2017.
  */
 <!--scope mówi daj mi zasięg tylko users. $rootScope dałby mi zasięg wszystkiego-->
-angular.module("Sda", ['ngResource']).controller("usersCtrl", function ($scope, $http) {
+angular.module("Sda", ['ngResource']).controller("usersCtrl", function ($scope, $resource) {
     var resource = $resource('http://jsonplaceholder.typicode.com/users/:user', {user: "@user"});
 //Aplikacja restowa:
 // GET -> /users/{id}
