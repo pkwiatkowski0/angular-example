@@ -1,10 +1,16 @@
 /**
  * Created by patry on 25.03.2017.
  */
-
 <!--scope mówi daj mi zasięg tylko users. $rootScope dałby mi zasięg wszystkiego-->
 angular.module("Sda", ['ngResource']).controller("usersCtrl", function ($scope, $http) {
     var resource = $resource('http://jsonplaceholder.typicode.com/users/:user', {user: "@user"});
+//Aplikacja restowa:
+// GET -> /users/{id}
+// POST -> /users
+// PUT -> /users lub PUT -> /users/{id}
+// DELETE -> /users/{id}
+
+
     // $scope.loading = true;
     // $scope.users = [];
     // var promise = $http.get("")
@@ -22,6 +28,8 @@ angular.module("Sda", ['ngResource']).controller("usersCtrl", function ($scope, 
         }, function() {
             $scope.error = true;
         });
+
+        resource.save({}, {name: "name", role: "role"});
 
     /* var user = {
      username: "pawel",
