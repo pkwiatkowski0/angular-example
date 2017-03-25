@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Sda">
+<head>
+    <title>SDA</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body ng-controller="TabsCtrl">
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li ng-class="{active:isCurrent(1)}"><a ng-click="changeTab(1)">Users</a></li>
+                <li ng-class="{active:isCurrent(2)}"><a ng-click="changeTab(2)">Add user</a></li>
+                <li ng-class="{active:isCurrent(3)}"><a ng-click="changeTab(3)">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+    <div class="container">
+        <div class="page-header">
+            <h1>Sticky footer with fixed navbar</h1>
+        </div>
+        <!--wyswietlenie zmiennej hello ze $scope.hello tylko w tym divie w ktorym przypiszemy scopa-->
+        <div ng-controller="usersCtrl">
+            <div ng-show="isCurrent(1)">
+                <!-- znak "pipe" | po tym znaku mozemy przypisywac metody dla zmiennych. Najlepiej korzystac z dokumentacji angulara a nie springa-->
+                {{hello| uppercase}}
+                <!--to był one way databiding czyli to co widac w controlerze widac w html-->
+                <p ng-bind="hello"></p>
+
+                <!--petla for w html: -->
+                <p ng-repeat="user in users |limitTo:2" ng-bind="user"></p>
+
+                <br>
+                <!--2 way databinging to co jest w html wrzucimy do controllera. Wyswietli nam sie pole input ktore zmienia zmienną. Ta funkcja jest baredzo ciężka!-->
+                <input ng-model="search.username">
+
+                <!--pokazywanie i ukrywanie ng-ifem jest droga operacja poniewaz ng-if musi znowu wstawic to do DOMa-->
+                <!-- <p ng-if=""></p>-->
+                <!--ng-show ukrywa i pokazuje uzytkownikowi. -->
+                <!--<p ng-show="{{$even}}" ng-bind="user"></p>-->
+                <!--<input ng-model="search">-->
+                <input type="checkbox" ng-model="all">all
+                <!--<p ng-if="loading">ładowanie userow</p>-->
+                <p ng-if="!users">Ladowanie userow</p>
+                <!--"zANIM WYSWIETLISZ PRZEPUSC PRZEZ FILTR:-->
+                <!--kolejnosc jest wazna: bierzemy wszystkich userow, przefiltruje po query a potem je zlimituje do 2-->
+                <!--<p ng-repeat="user in users | filter:search | limitTo:limit" ng-if="!loading">-->
+                <p ng-repeat="user in users | filter:search | limitTo:limit" ng-if="users">
+                    <!--<span ng-bind="user" ng-if="all || $even"></span>-->
+                    <span ng-show="all || $odd" ng-class="{'text-success':$odd, 'text-danger':$even}">
+        <span ng-bind="user.username"></span>
+                        phone <span ng-bind="user.phone"></span>
+                        <!--<p ng-repeat="user in users |filter:search" ng-bind="user">-->
+                        <!--user: {{$user}}, index: {{$index}}, even: {{$even}}, odd: {{$odd}}-->
+                        <button class="btn btn-danger btn-sm" ng-click="remove($index)"> Remove</button>
+        </span>
+
+                </p>
+                <a ng-click="more()" ng-show="shouldShowMoreButton()">More</a>
+                <br>
+            </div>
+            <div ng-show="isCurrent(2)">
+                <!--jak podam ng-model="newName" to stworzy zmienna w calym scopie. Tak samo jakbym dodawal w js $scope.newName-->
+                <input ng-model="newName" placeholder="Type name"> <br>
+                <input ng-model="newRole" placeholder="Type role"> <br>
+                <button class="btn btn-success" ng-click="addUser()">Add User</button>
+            </div>
+            <div ng-show="isCurrent(3)">
+                Contact
+            </div>
+            <!--<img width="500px" ng-src="{{photo}}"/>-->
+        </div>
+        <div>
+        </div>
+        Hello {{"Patryk " + "Kwiatkowski"}}
+    </div>
+
+    <!--należy pobrać ten cdnjs poprzez alt-enter-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+    <!--zla praktyka tworzyc kod scriptowy w html ale dla ulatwienia tak zrobie-->
+    <script src="app.js"></script>
+</nav>
+</body>
+</html>
